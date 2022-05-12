@@ -5762,7 +5762,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damp: 2
-  displacement: 0.5
+  displacement: 1
 --- !u!208 &1622885981
 NavMeshObstacle:
   m_ObjectHideFlags: 0

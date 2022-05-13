@@ -39,10 +39,14 @@ public class MoveToFat : MonoBehaviour
     void FixedUpdate()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, goal.transform.position - transform.position, 5f))
+        if (Physics.Raycast(transform.position, (goal.transform.position - transform.position).normalized, out hit, 5f))
         {
-            puedeCazar = true;
-            Debug.Log("Did Hit");
+            if (hit.transform.tag != "Obstaculo")
+            {
+                puedeCazar = true;
+                Debug.Log("Did Hit");
+            }
+
         }
         else
         {

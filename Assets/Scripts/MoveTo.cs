@@ -1,4 +1,3 @@
-// MoveTo.cs
 using UnityEngine;
 using UnityEngine.AI;
 

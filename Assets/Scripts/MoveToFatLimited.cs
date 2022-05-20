@@ -25,6 +25,7 @@ public class MoveToFatLimited : MonoBehaviour
 
     void Update()
     {
+
         if (puedeCazar)
         {
             agent.destination = goal.position;
@@ -43,24 +44,29 @@ public class MoveToFatLimited : MonoBehaviour
 
     void FixedUpdate()
     {
+        Vector3 rayoIzquierdo = transform.forward * -30;
+        Vector3 rayoDerecho = transform.forward * 30;
         RaycastHit hit;
         Debug.DrawLine(transform.position, goal.transform.position, Color.green, 1f);
+
+        Debug.DrawRay(transform.position, transform.forward * 10, Color.red, 1f);
+        Debug.DrawRay(transform.position, rayoIzquierdo * 10, Color.blue, 1f);
+        Debug.DrawRay(transform.position, rayoDerecho * 10, Color.magenta, 1f);
+
         if (Physics.Raycast(transform.position, goal.transform.position - transform.position, out hit, distance))
         {
-            Debug.Log("HIT" + hit.transform.eulerAngles.magnitude);
-            Debug.Log("DERECHA " + right.transform.eulerAngles.magnitude);
-            Debug.Log("IZQUIERDA " + left.transform.eulerAngles.magnitude);
-            Debug.Log("ESFERA " + esfera.transform.eulerAngles.normalized.magnitude);
+            Vector3 targetDir = goal.transform.position - transform.position;
+            float angulo = Vector3.Angle(transform.forward, targetDir);
+            Debug.Log("ANGULO " + angulo);
+            Debug.Log("FORWARD" + transform.forward);
+            if (angulo > -30 && angulo < 30)
 
-            if (hit.transform.eulerAngles.magnitude >= left.transform.eulerAngles.magnitude && hit.transform.eulerAngles.magnitude <= 290)
-            {
-                Debug.Log("Entré en el lio de angulos");
                 if (hit.transform.tag != "Obstaculo")
                 {
                     Debug.Log("HOLI");
                     puedeCazar = true;
                 }
-            }
+
         }
         else
         {

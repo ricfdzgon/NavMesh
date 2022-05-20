@@ -20,7 +20,6 @@ public class MoveToFatLimited : MonoBehaviour
         agent.destination = goal.position;
         startPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         puedeCazar = false;
-
     }
 
     void Update()
@@ -33,7 +32,6 @@ public class MoveToFatLimited : MonoBehaviour
         {
             RestartPosition();
         }
-
     }
 
     private void RestartPosition()
@@ -51,7 +49,7 @@ public class MoveToFatLimited : MonoBehaviour
             Debug.Log("DERECHA " + right.eulerAngles.magnitude);
             Debug.Log("Izquierda " + left.eulerAngles.magnitude);
 
-            if (hit.transform.eulerAngles.magnitude >= left.eulerAngles.magnitude && hit.transform.eulerAngles.magnitude <= right.eulerAngles.magnitude)
+            if (hit.transform.eulerAngles.magnitude >= left.eulerAngles.magnitude && hit.transform.eulerAngles.magnitude <= 280)
             {
                 Debug.Log("Entré en el lio de angulos");
                 if (hit.transform.tag != "Obstaculo")

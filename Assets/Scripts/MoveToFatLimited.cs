@@ -7,8 +7,9 @@ public class MoveToFatLimited : MonoBehaviour
 {
     NavMeshAgent agent;
     public Transform goal;
-    public Transform left;
-    public Transform right;
+    public GameObject left;
+    public GameObject right;
+    public GameObject esfera;
 
     private Vector3 startPosition;
     private bool puedeCazar;
@@ -43,13 +44,15 @@ public class MoveToFatLimited : MonoBehaviour
     void FixedUpdate()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, (goal.transform.position - transform.position).normalized, out hit, distance))
+        Debug.DrawLine(transform.position, goal.transform.position, Color.green, 1f);
+        if (Physics.Raycast(transform.position, goal.transform.position - transform.position, out hit, distance))
         {
             Debug.Log("HIT" + hit.transform.eulerAngles.magnitude);
-            Debug.Log("DERECHA " + right.eulerAngles.magnitude);
-            Debug.Log("Izquierda " + left.eulerAngles.magnitude);
+            Debug.Log("DERECHA " + right.transform.eulerAngles.magnitude);
+            Debug.Log("IZQUIERDA " + left.transform.eulerAngles.magnitude);
+            Debug.Log("ESFERA " + esfera.transform.eulerAngles.normalized.magnitude);
 
-            if (hit.transform.eulerAngles.magnitude >= left.eulerAngles.magnitude && hit.transform.eulerAngles.magnitude <= 280)
+            if (hit.transform.eulerAngles.magnitude >= left.transform.eulerAngles.magnitude && hit.transform.eulerAngles.magnitude <= 290)
             {
                 Debug.Log("Entré en el lio de angulos");
                 if (hit.transform.tag != "Obstaculo")

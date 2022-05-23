@@ -51,9 +51,8 @@ public class MoveToFatLimited : MonoBehaviour
                     SetState(AgentState.Chasing);
                     break;
                 }
-                else
+                else if (agent.isStopped)
                 {
-                    if (agent.isStopped)
                     {
                         SetState(AgentState.Iddle);
                     }

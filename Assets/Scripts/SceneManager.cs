@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class SceneManager : MonoBehaviour
 {
+    public static SceneManager instance;
     public MoveTo basico;
     public MoveToFat seguimientoNormal;
     public MoveToFatLimited seguimientoPro;
 
+    public Transform startPositionSeguidor;
+
+    void Awake()
+    {
+        instance = this;
+    }
     public void ButtonBasicoOnClick()
     {
         if (!basico.enabled)

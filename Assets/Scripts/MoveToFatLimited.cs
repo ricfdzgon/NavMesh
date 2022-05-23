@@ -17,7 +17,7 @@ public class MoveToFatLimited : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         // agent.destination = goal.position;
-        startPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        startPosition = SceneManager.instance.startPositionSeguidor.position;
         puedeCazar = false;
         agentState = AgentState.Iddle;
         destination = transform.position;

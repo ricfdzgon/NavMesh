@@ -11,11 +11,11 @@ public class MoveToFat : MonoBehaviour
     private bool puedeCazar;
 
     public float distance = 5f;
-      void Start()
+    void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.destination = goal.position;
-        startPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        startPosition = SceneManager.instance.startPositionSeguidor.position;
         puedeCazar = true;
     }
 

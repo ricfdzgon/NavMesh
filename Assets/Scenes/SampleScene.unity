@@ -5496,9 +5496,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc6c84ee5df3404fba73a6c6e77291f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  instance: {fileID: 0}
   basico: {fileID: 352080986}
   seguimientoNormal: {fileID: 352080987}
   seguimientoPro: {fileID: 352080980}
+  startPositionSeguidor: {fileID: 352080985}
 --- !u!1 &1372565245
 GameObject:
   m_ObjectHideFlags: 0

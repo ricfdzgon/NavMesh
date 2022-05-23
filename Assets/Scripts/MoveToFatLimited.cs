@@ -7,10 +7,8 @@ public class MoveToFatLimited : MonoBehaviour
 {
     NavMeshAgent agent;
     public Transform goal;
-    public GameObject left;
-    public GameObject right;
-    public GameObject esfera;
-
+    public AgentState agentState;
+    public Vector3 destination;
     private Vector3 startPosition;
     private bool puedeCazar;
 
@@ -18,31 +16,76 @@ public class MoveToFatLimited : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.destination = goal.position;
+        // agent.destination = goal.position;
         startPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         puedeCazar = false;
-    }
-
-    void Update()
-    {
-
-        if (puedeCazar)
-        {
-            agent.destination = goal.position;
-        }
-        else
-        {
-            RestartPosition();
-        }
-    }
-
-    private void RestartPosition()
-    {
-        agent.destination = startPosition;
-        puedeCazar = false;
+        agentState = AgentState.Iddle;
+        destination = transform.position;
     }
 
     void FixedUpdate()
+    {
+        IsInRange();
+
+        switch (agentState)
+        {
+            case AgentState.Iddle:
+                if (puedeCazar)
+                {
+                    SetState(AgentState.Chasing);
+                }
+                break;
+            case AgentState.Chasing:
+                if (!puedeCazar)
+                {
+                    SetState(AgentState.Returning);
+                }
+                else
+                {
+                    destination = goal.position;
+                }
+                break;
+            case AgentState.Returning:
+                if (puedeCazar)
+                {
+                    SetState(AgentState.Chasing);
+                    break;
+                }
+                else
+                {
+                    if (agent.isStopped)
+                    {
+                        SetState(AgentState.Iddle);
+                    }
+                }
+                break;
+        }
+        agent.destination = destination;
+    }
+
+    void SetState(AgentState newAgentState)
+    {
+        if (newAgentState != agentState)
+        {
+            Debug.Log(agentState);
+            agentState = newAgentState;
+
+            switch (agentState)
+            {
+                case AgentState.Iddle:
+                    destination = transform.position;
+                    break;
+
+                case AgentState.Chasing:
+                    break;
+                case AgentState.Returning:
+                    destination = startPosition;
+                    break;
+            }
+        }
+    }
+
+    public void IsInRange()
     {
         Vector3 rayoIzquierdo = transform.forward * -30;
         Vector3 rayoDerecho = transform.forward * 30;
@@ -57,21 +100,23 @@ public class MoveToFatLimited : MonoBehaviour
         {
             Vector3 targetDir = goal.transform.position - transform.position;
             float angulo = Vector3.Angle(transform.forward, targetDir);
-            Debug.Log("ANGULO " + angulo);
-            Debug.Log("FORWARD" + transform.forward);
             if (angulo > -30 && angulo < 30)
 
                 if (hit.transform.tag != "Obstaculo")
                 {
-                    Debug.Log("HOLI");
                     puedeCazar = true;
                 }
-
         }
         else
         {
-            RestartPosition();
-            // Debug.Log("Did not Hit");
+            puedeCazar = false;
         }
     }
+}
+
+public enum AgentState
+{
+    Iddle,
+    Chasing,
+    Returning
 }
